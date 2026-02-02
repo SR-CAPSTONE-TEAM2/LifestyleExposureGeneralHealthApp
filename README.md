@@ -1,6 +1,11 @@
 # LifestyleExposureGeneralHealthApp
 
-Source for Lifestyle Exposure & General Health App that allow users to track several lifestyle metrics and provide lifestyle suggestions using AI/ML strategies. Mobile app planne for both iOS and Android. 
+General purpose health and wellness application for exercise, food, macronutrients, micronutrients, and miscellaneous health indicators.
+Expand to more niche health indicators people have begun taking more seriously
+Pesticides, VO2 max, hormones
+Display overall health score and subscores in above categories
+Give recommendations to users to improve that score
+
 
 # Stack
 
