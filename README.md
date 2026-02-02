@@ -1,9 +1,11 @@
 # LifestyleExposureGeneralHealthApp
 
+Source for Lifestyle Exposure & General Health App that allow users to track several lifestyle metrics and provide lifestyle suggestions using AI/ML strategies. Mobile app planne for both iOS and Android. 
+
 # Stack
 
-React-Native
-SQLite
+- React-Native
+- Firebase + SQLite
 
 
 # Team Resources
