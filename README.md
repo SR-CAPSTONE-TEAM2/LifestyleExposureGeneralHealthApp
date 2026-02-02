@@ -4,7 +4,7 @@ Source for Lifestyle Exposure & General Health App that allow users to track sev
 
 # Stack
 
-- React-Native
+- React-Native (Expo framework)
 - Firebase + SQLite
 
 
