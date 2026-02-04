@@ -10,7 +10,7 @@ Give recommendations to users to improve that score
 # Stack
 
 - React-Native (Expo framework)
-- Firebase + SQLite
+- Supabase + SQLite
 
 
 # Team Resources
