@@ -5,7 +5,9 @@ import 'expo-sqlite/localStorage/install';
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+// `process.env` values may be undefined in some environments; provide
+// safe fallbacks so the TypeScript compiler and createClient call agree on types.
+export const supabase = createClient(supabaseUrl ?? '', supabaseAnonKey ?? '', {
   auth: {
     storage: localStorage,
     autoRefreshToken: true,
