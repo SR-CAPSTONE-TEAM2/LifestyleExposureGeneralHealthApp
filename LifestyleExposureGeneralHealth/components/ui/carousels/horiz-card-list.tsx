@@ -1,27 +1,23 @@
 import { FlatList, ListRenderItem, StyleSheet, ViewStyle } from 'react-native';
-import { Card } from '@/components/ui/cards/card';
 import { ThemedView } from '@/components/themed-view'
 import { ThemedText } from '@/components/themed-text'
+import { BaseCardData } from '../cards/types';
 
-export interface DefaultCardData {
-  id: string;
-  title: string;
-  desc: string;
-}
-
-interface CardListProps {
-  data: DefaultCardData[];
-  title: string;
+interface CardListProps<T extends BaseCardData> {
+  data: T[];
+  renderCard: (item: T, onPress?: () => void) => React.ReactElement;
+  title?: string;
   horizontal?: boolean;
   showsScrollIndicator?: boolean;
   contentContainerStyle?: ViewStyle;
   containerStyle?: ViewStyle;
-  onCardPress?: (item: DefaultCardData) => void;
+  onCardPress?: (item: T) => void;
   emptyMessage?: string;
 }
 
-export function HorizCardList({
+export function HorizCardList<T extends BaseCardData>({
   data,
+  renderCard,
   title,
   horizontal = true,
   showsScrollIndicator = false,
@@ -29,14 +25,9 @@ export function HorizCardList({
   containerStyle,
   onCardPress,
   emptyMessage = 'No cards available',
-}: CardListProps) {
-  const renderItem: ListRenderItem<DefaultCardData> = ({ item }) => (
-    <Card
-      title={item.title}
-      desc={item.desc}
-      onPress={onCardPress ? () => onCardPress(item) : undefined}
-    />
-  );
+}: CardListProps<T>) {
+  const renderItem: ListRenderItem<T> = ({ item }) => (
+    renderCard(item, onCardPress ? () => onCardPress(item) : undefined));
 
   const renderEmpty = () => (
     <ThemedView style={styles.emptyContainer}>
@@ -68,9 +59,11 @@ export function HorizCardList({
 const styles = StyleSheet.create({
   container: {
     gap: 12,
+    paddingTop: 10,
     paddingRight: 16,
   },
   title: {
+    marginTop: 12,
     marginBottom: 12,
   },
   emptyContainer: {

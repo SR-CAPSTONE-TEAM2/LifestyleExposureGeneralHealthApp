@@ -2,15 +2,15 @@ import { StyleSheet, Pressable } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { DefaultCardData } from './types';
 
 interface CardProps {
-  title: string;
-  desc: string;
+  data: DefaultCardData;
   onPress?: () => void;
   disabled?: boolean;
 }
 
-export function Card({ title, desc, onPress, disabled = false }: CardProps) {
+export function DefaultCard({ data, onPress, disabled = false }: CardProps) {
   const theme = useColorScheme() ?? 'light';
 
   return (
@@ -24,8 +24,8 @@ export function Card({ title, desc, onPress, disabled = false }: CardProps) {
         disabled && styles.disabled,
       ]}
     >
-      <ThemedText type="subtitle">{title}</ThemedText>
-      <ThemedText>{desc}</ThemedText>
+      <ThemedText type="subtitle">{data.title}</ThemedText>
+      <ThemedText>{data.desc}</ThemedText>
     </Pressable>
   );
 }
