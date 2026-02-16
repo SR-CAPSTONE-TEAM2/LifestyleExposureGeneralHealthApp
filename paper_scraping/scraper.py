@@ -6,11 +6,16 @@ input_file = 'gi_studies.jsonl'
 output_file = 'gi_studies_cleaned.jsonl'
 
 # these can be changed 
-diseases = ['Crohn\'s', 'IBS', 'Ulcerative Colitis', 'Leaky Gut']
-factors = ['Vitamin D', 'Short-chain fatty acids', 'Probiotics', 'Cortisol']
-query = [diseases, factors]
+ibd_keywords = ["inflammatory bowel disease", "ibd", "crohns", "ulcerative colitis", "Crohn's Disease"]
+lifestyle_keywords = ["diet", "exercise", "stress", "sleep", "smoking", "alcohol"]
+# make queries
+queries = []
+for ibd_keyword in ibd_keywords:
+    for lifestyle_keyword in lifestyle_keywords:
+        queries.append([ibd_keyword, lifestyle_keyword])
 
-get_and_dump_pubmed_papers(query, output_filepath='gi_studies.jsonl', max_results=50) #change max_results to desired amount of papers
+
+get_and_dump_pubmed_papers(queries, output_filepath='gi_studies.jsonl', max_results=100) #change max_results to desired amount of papers
 
 with open(input_file, 'r') as f_in, open(output_file, 'w') as f_out:
     for line in f_in:

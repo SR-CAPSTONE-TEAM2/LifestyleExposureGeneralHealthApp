@@ -46,5 +46,5 @@ def get_answer_from_research(user_query):
 
 
 # example usage
-question = "How does Yiyi Fuzi Baijiang powder affect gut microbiota in ulcerative colitis?"
+question = "How does gut microbiomes effect the brain?"
 print(get_answer_from_research(question))
