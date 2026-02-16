@@ -15,6 +15,7 @@ Give recommendations to users to improve that score
 
 # Team Resources
 **Docsite**: [DocSite](https://hugo-doc-site-team2.vercel.app/)
+
 **Web App Deployment**: [WebAppVersion](https://lifestyle-exposure-general-health-a.vercel.app/dashboard)
 
 **Penpot**: [Project](https://design.penpot.app/#/dashboard/recent?team-id=5de02dba-212a-8144-8007-82fcc20725f1)
