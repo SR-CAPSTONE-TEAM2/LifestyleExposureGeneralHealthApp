@@ -1,15 +1,18 @@
-import 'react-native-url-polyfill/auto'
 import { createClient } from '@supabase/supabase-js'
 import Constants from 'expo-constants'
 
-const supabaseUrl = Constants.expoConfig?.extra?.supabaseUrl!
-const supabasePubKey = Constants.expoConfig?.extra?.supabasePubKey!
+// We check if we are in a browser environment to avoid the "window is not defined" error
+const isBrowser = typeof window !== 'undefined'
+
+const supabaseUrl = Constants.expoConfig?.extra?.supabaseUrl ?? ""
+const supabasePubKey = Constants.expoConfig?.extra?.supabasePubKey ?? ""
 
 export const supabase = createClient(supabaseUrl, supabasePubKey, {
   auth: {
-    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+    // If browser, use localStorage. If server, use nothing.
+    storage: isBrowser ? window.localStorage : undefined,
     autoRefreshToken: true,
     persistSession: true,
-    detectSessionInUrl: false,
+    detectSessionInUrl: true,
   },
 })
