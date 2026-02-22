@@ -4,9 +4,10 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Modal } from 'react-native';
 
 export const unstable_settings = {
-  anchor: '(tabs)',
+  anchor: '(pages)',
 };
 
 export default function RootLayout() {
@@ -15,8 +16,10 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(pages)" options={{ headerShown: false }} />
+        {/*Add modals as we go */}
+        <Stack.Screen name="(modals)/food-modal" options={{ presentation: 'modal', headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
