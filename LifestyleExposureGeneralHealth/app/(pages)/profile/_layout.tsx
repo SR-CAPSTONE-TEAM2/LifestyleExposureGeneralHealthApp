@@ -12,6 +12,22 @@ export default function ProfileLayout() {
         }}
       />
       {/* Other screens */}
+      <Stack.Screen
+        name='settings'
+        options={{
+          headerShown: false,
+          freezeOnBlur: true,
+          title: 'Settings',
+        }}
+      />
+      <Stack.Screen
+        name='linked-apps'
+        options={{
+          headerShown: true,
+          freezeOnBlur: true,
+          title: 'Linked Third-Party Apps',
+        }}
+      />
     </Stack>
   );
 }
