@@ -2,13 +2,32 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { router } from 'expo-router'
 
+const styles = {
+  container: { padding: '20px', fontFamily: 'sans-serif' },
+  header: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+  code: { 
+    display: 'block', 
+    backgroundColor: '#f4f4f4', 
+    padding: '10px', 
+    borderRadius: '5px',
+    overflowX: 'auto' as 'auto'
+  }
+}
+  
 export default function Dashboard() {
   const [profile, setProfile] = useState<any>(null)
   const [session, setSession] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [initializing, setInitializing] = useState(true)
 
+  console.log("Dashboard Rendering...");
+  console.log("Session State:", session);
+
   useEffect(() => {
+
+    
+
+    
     // 1. Initial Session Check
     const checkUser = async () => {
       const { data: { session: initialSession } } = await supabase.auth.getSession()
@@ -47,17 +66,18 @@ export default function Dashboard() {
     setLoading(true)
     try {
       const { data, error } = await supabase
-        .from('profiles')
+        .from('user_profiles')
         .select('*')
-        .eq('id', userId)
-        .single()
+        .eq('user_id', userId)
+        .maybeSingle() 
 
       if (error) throw error
       setProfile(data)
     } catch (error) {
-      console.error('Error fetching profile:', error)
+      console.error('Detailed Profile Error:', error)
     } finally {
       setLoading(false)
+      setInitializing(false) // Ensure this hits even if profile fails
     }
   }
 
@@ -114,15 +134,6 @@ export default function Dashboard() {
     </div>
   )
 }
+  
 
-const styles = {
-  container: { padding: '20px', fontFamily: 'sans-serif' },
-  header: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
-  code: { 
-    display: 'block', 
-    backgroundColor: '#f4f4f4', 
-    padding: '10px', 
-    borderRadius: '5px',
-    overflowX: 'auto' as 'auto'
-  }
-}
+  

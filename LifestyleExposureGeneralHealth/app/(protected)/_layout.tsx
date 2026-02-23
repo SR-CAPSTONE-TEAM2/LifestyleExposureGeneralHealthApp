@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Redirect } from 'expo-router'
+import { Redirect, Slot } from 'expo-router'
 import { supabase } from '@/lib/supabase'
 
 export default function ProtectedLayout() {
@@ -27,5 +27,5 @@ export default function ProtectedLayout() {
     return <Redirect href="/login" />
   }
 
-  return null
+  return <Slot />
 }
