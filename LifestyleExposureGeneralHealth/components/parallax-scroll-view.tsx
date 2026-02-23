@@ -14,7 +14,7 @@ import { useThemeColor } from '@/hooks/use-theme-color';
 const HEADER_HEIGHT = 250;
 
 type Props = PropsWithChildren<{
-  headerImage: ReactElement;
+  headerImage?: ReactElement;
   headerBackgroundColor: { dark: string; light: string };
 }>;
 
@@ -43,6 +43,17 @@ export default function ParallaxScrollView({
       ],
     };
   });
+
+  // If no header image provided, render without header
+  if (!headerImage) {
+    return (
+      <ThemedView style={styles.container}>
+        <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
+          <ThemedView style={styles.content}>{children}</ThemedView>
+        </Animated.ScrollView>
+      </ThemedView>
+    );
+  }
 
   return (
     <Animated.ScrollView
