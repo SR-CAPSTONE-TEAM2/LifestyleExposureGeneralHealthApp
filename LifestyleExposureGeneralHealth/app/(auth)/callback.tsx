@@ -10,7 +10,7 @@ export default function AuthCallback() {
       const { data, error } = await supabase.auth.getSession();
       
       if (data?.session) {
-        router.replace('/dashboard');
+        router.replace('/protected/pages/dashboard');
       } else {
         // If there's no session, go back to login to try again
         router.replace('/login');
