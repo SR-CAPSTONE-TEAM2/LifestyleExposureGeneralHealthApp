@@ -11,6 +11,13 @@ export default function Login() {
   }
 
   return (
+    <div>
+      <h2>Magic Link</h2>
+
+      <p>Follow this link to login:</p>
+      <p><a href="{{ .ConfirmationURL }}">Log In</a></p>
+    </div>
+    
     <button onClick={signInWithGoogle}>
       Sign in with Google
     </button>
