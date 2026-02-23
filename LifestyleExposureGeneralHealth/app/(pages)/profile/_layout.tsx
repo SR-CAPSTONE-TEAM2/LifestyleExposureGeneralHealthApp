@@ -15,7 +15,7 @@ export default function ProfileLayout() {
       <Stack.Screen
         name='settings'
         options={{
-          headerShown: false,
+          headerShown: true,
           freezeOnBlur: true,
           title: 'Settings',
         }}
@@ -26,6 +26,14 @@ export default function ProfileLayout() {
           headerShown: true,
           freezeOnBlur: true,
           title: 'Linked Third-Party Apps',
+        }}
+      />
+      <Stack.Screen
+        name='account-deletion'
+        options={{
+          headerShown: true,
+          freezeOnBlur: true,
+          title: 'Account Deletion',
         }}
       />
     </Stack>

@@ -1,13 +1,19 @@
+import { useState } from 'react';
 import { Stack, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { useColorScheme, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 
 import { OptionsRow, ProfileOptionsContainer } from '@/components/ui/containers/profile-options-container';
 
 export default function ProfileScreen() {
+  const colorScheme = useColorScheme();
+  const iconColor = colorScheme === 'dark' ? 'white' : 'black';
+
   const user = "UserName";
+
+  const [storeMealsDays, setStoreMealsDays] = useState('60 days');
 
   const router = useRouter();
   return (
@@ -19,7 +25,7 @@ export default function ProfileScreen() {
             <TouchableOpacity
               onPress={() => router.push('/(pages)/profile/settings')}
               style={{ marginRight: 24 }}>
-              <Ionicons name="settings-outline" size={24} color="white" />
+              <Ionicons name="settings-outline" size={24} color={iconColor} />
             </TouchableOpacity >
           ),
         }}
@@ -32,15 +38,11 @@ export default function ProfileScreen() {
 
         <ProfileOptionsContainer style={{ marginTop: 40 }}>
           <OptionsRow
-            type="control"
+            type="select"
             label="Store Meals For"
-            control={
-              <TextInput
-                style={styles.numberInput}
-                value="30"
-                keyboardType="numeric"
-              />
-            }
+            value={storeMealsDays}
+            options={['7 days', '14 days', '30 days', '60 days', '90 days', 'Always']}
+            onSelect={setStoreMealsDays}
           />
           <OptionsRow
             type="navigation"

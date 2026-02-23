@@ -1,21 +1,44 @@
-import { View, Text, Image, StyleSheet, ViewStyle } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native';
 
 type LinkedAppItemProps = {
   name: string;
-  linkedAccount: string;
-  icon: { uri: string } | number; // supports require() or { uri: '' }
+  icon: { uri: string } | number;
+  linkedAccount?: string;
+  connectedLabel?: string;
+  onLink: () => void;
+  onUnlink: () => void;
   style?: ViewStyle;
 };
 
-export function LinkedAppItem({ name, linkedAccount, icon, style }: LinkedAppItemProps) {
+export function LinkedAppItem({ name, icon, linkedAccount, connectedLabel, onLink, onUnlink, style }: LinkedAppItemProps) {
+  const isLinked = !!linkedAccount;
+
   return (
     <View style={[styles.card, style]}>
       <Image source={icon} style={styles.icon} />
       <View style={styles.textContainer}>
         <Text style={styles.appName}>{name}</Text>
-        <Text style={styles.accountLabel}>Linked Account:</Text>
-        <Text style={styles.accountEmail}>{linkedAccount}</Text>
+        {isLinked ? (
+          <>
+            <Text style={styles.accountLabel}>
+              {connectedLabel ? 'Status :' : 'Linked Account:'}
+            </Text>
+            <Text style={styles.accountEmail}>
+              {connectedLabel ?? linkedAccount}
+            </Text>
+          </>
+        ) : (
+          <Text style={styles.accountLabel}>Tap to link your account</Text>
+        )}
       </View>
+      <TouchableOpacity
+        style={[styles.button, isLinked ? styles.unlinkButton : styles.linkButton]}
+        onPress={isLinked ? onUnlink : onLink}
+      >
+        <Text style={[styles.buttonText, isLinked && styles.unlinkButtonText]}>
+          {isLinked ? 'Unlink' : 'Link'}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -28,12 +51,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     gap: 16,
-    // "floating" shadow
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
-    elevation: 6, // Android
+    elevation: 6,
   },
   icon: {
     width: 72,
@@ -57,5 +79,28 @@ const styles = StyleSheet.create({
   accountEmail: {
     color: 'white',
     fontSize: 14,
+  },
+  button: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  linkButton: {
+    backgroundColor: '#f5a623',
+  },
+  unlinkButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#aaa',
+  },
+  buttonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: 'black',
+  },
+  unlinkButtonText: {
+    color: '#aaa',
   },
 });

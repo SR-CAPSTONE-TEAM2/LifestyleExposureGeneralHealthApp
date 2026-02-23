@@ -2,16 +2,42 @@ import { Stack, useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
+import { OptionsRow, ProfileOptionsContainer } from '@/components/ui/containers/profile-options-container';
+import { useState } from 'react';
 
 export default function SettingsScreen() {
   const user = "UserName";
   const router = useRouter();
+
+  const [notificationsOn, setNotificationsOn] = useState(false);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}>
-      <ThemedText type="title">
-        {`Hi, \n${user}!`}
+
+      <ThemedText type="subtitle">
+        Alerts
       </ThemedText>
+      <ProfileOptionsContainer style={{ marginTop: 24 }}>
+        <OptionsRow
+          type="toggle"
+          label="Enable Notifications"
+          value={notificationsOn}
+          onToggle={setNotificationsOn}
+        />
+      </ProfileOptionsContainer>
+
+      <ThemedText type="subtitle" style={{ marginTop: 24 }}>
+        User Account
+      </ThemedText>
+
+      <ProfileOptionsContainer style={{ marginTop: 24 }}>
+        <OptionsRow
+          type="navigation"
+          label="Delete Account"
+          onPress={() => router.push('/(pages)/profile/account-deletion')}
+        />
+      </ProfileOptionsContainer>
     </ParallaxScrollView >
   );
 }

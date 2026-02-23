@@ -1,52 +1,98 @@
-import { View, FlatList, TouchableOpacity, StyleSheet, Modal, Text } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { useState } from 'react';
-import { Stack } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import AppleHealthKit from 'react-native-health';
+import { Platform } from 'react-native';
 import { LinkedAppItem } from '@/components/ui/containers/linked-app-item';
 
-const LINKED_APPS = [
+const SUPPORTED_LINKED_APPS = [
   {
-    id: '1',
-    name: 'My FitnessPal',
-    linkedAccount: 'account.email@gmail.com',
-    icon: require('@/assets/images/myfitnesspal_app_logo.jpg')
+    id: 'apple_health',
+    name: 'Apple Health',
+    icon: require('@/assets/images/apple-health-app-logo.jpg'),
+    platform: 'ios',
+    connectedLabel: 'Connected',
   },
   {
-    id: '2',
+    id: 'health_connect',
+    name: 'Health Connect',
+    icon: require('@/assets/images/health-connect-app-logo.png'),
+    platform: 'android',
+    connectedLabel: 'Connected',
+  },
+  {
+    id: 'garmin',
     name: 'Garmin Connect',
-    linkedAccount: 'account.email@gmail.com',
     icon: require('@/assets/images/garmin_connect_app_logo.png'),
+    platform: 'both',
   },
+  {
+    id: 'fitbit',
+    name: 'Fitbit',
+    icon: require('@/assets/images/garmin_connect_app_logo.png'),
+    platform: 'both',
+  },
+  {
+    id: 'strava',
+    name: 'Strava',
+    icon: require('@/assets/images/garmin_connect_app_logo.png'),
+    platform: 'both',
+  },
+
 ];
 
 export default function LinkedAppsScreen() {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [linkedAccounts, setLinkedAccounts] = useState<Record<string, string>>({
+    garmin: 'account@gmail.com',
+  });
+
+  function handleLink(id: string) {
+    if (id === 'apple_health' && Platform.OS === 'ios') {
+      const permissions = {
+        permissions: {
+          read: [
+            AppleHealthKit.Constants.Permissions.Steps,
+            AppleHealthKit.Constants.Permissions.HeartRate,
+            AppleHealthKit.Constants.Permissions.ActiveEnergyBurned,
+          ],
+          write: [],
+        },
+      };
+      AppleHealthKit.initHealthKit(permissions, (error) => {
+        if (!error) {
+          setLinkedAccounts((prev) => ({ ...prev, [id]: 'Apple Health' }));
+        }
+      });
+    } else {
+      // OAuth flow for other apps
+      setLinkedAccounts((prev) => ({ ...prev, [id]: 'account@gmail.com' }));
+    }
+  }
+  function handleUnlink(id: string) {
+    setLinkedAccounts((prev) => {
+      const updated = { ...prev };
+      delete updated[id];
+      return updated;
+    });
+  }
 
   return (
     <View style={styles.container}>
-
-      {/* Add button */}
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => setModalVisible(true)}
-      >
-        <Ionicons name="add" size={32} color="black" />
-      </TouchableOpacity>
-
       {/* App list */}
       <FlatList
-        data={LINKED_APPS}
+        data={SUPPORTED_LINKED_APPS}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
           <LinkedAppItem
             name={item.name}
-            linkedAccount={item.linkedAccount}
             icon={item.icon}
+            linkedAccount={linkedAccounts[item.id]}
+            connectedLabel={item.connectedLabel}
+            onLink={() => handleLink(item.id)}
+            onUnlink={() => handleUnlink(item.id)}
           />
         )}
       />
-
     </View>
   );
 }
@@ -54,7 +100,6 @@ export default function LinkedAppsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2e3352',
     paddingHorizontal: 24,
     paddingTop: 32,
   },
