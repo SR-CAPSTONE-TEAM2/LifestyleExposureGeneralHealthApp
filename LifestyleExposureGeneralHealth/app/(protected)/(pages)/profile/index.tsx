@@ -5,6 +5,8 @@ import { useColorScheme, StyleSheet, TouchableOpacity, TextInput } from 'react-n
 import { ThemedText } from '@/components/themed-text';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 
+import { HorizCardList } from '@/components/ui/carousels/horiz-card-list';
+import { DefaultCard } from '@/components/ui/cards/default-card';
 import { OptionsRow, ProfileOptionsContainer } from '@/components/ui/containers/profile-options-container';
 
 export default function ProfileScreen() {
@@ -31,12 +33,22 @@ export default function ProfileScreen() {
         }}
       />
       < ParallaxScrollView
-        headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}>
+        headerBackgroundColor={{ light: '#1C1C2E', dark: '#1C1C2E' }}>
         <ThemedText type="title">
           {`Hi, \n${user}!`}
         </ThemedText>
 
-        <ProfileOptionsContainer style={{ marginTop: 40 }}>
+        <HorizCardList
+          data={[{ id: 'ask-ai', title: 'Ask AI' }]}
+          renderCard={(item, onPress) => (
+            <DefaultCard data={item} onPress={onPress} />
+          )}
+          title="AI Assistant"
+          onCardPress={() => router.push('/(pages)/profile/ask-ai')}
+          containerStyle={{ marginTop: 20 }}
+        />
+
+        <ProfileOptionsContainer style={{ marginTop: 20 }}>
           <OptionsRow
             type="select"
             label="Store Meals For"
@@ -57,7 +69,7 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   headerImage: {
-    color: '#808080',
+    color: '#8B5CF6',
     bottom: -90,
     left: -35,
     position: 'absolute',
@@ -77,7 +89,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   numberInput: {
-    backgroundColor: '#2a2f4a',
+    backgroundColor: '#1C1C2E',
     color: 'white',
     borderRadius: 20,
     paddingHorizontal: 20,

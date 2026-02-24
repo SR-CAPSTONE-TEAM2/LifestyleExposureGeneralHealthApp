@@ -1,20 +1,20 @@
 import { createClient } from '@supabase/supabase-js'
-import Constants from 'expo-constants'
 import { Platform } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-// We check if we are in a browser environment to avoid the "window is not defined" error
-//const isBrowser = typeof window !== 'undefined'
+const supabaseUrl: string | undefined = process.env.EXPO_PUBLIC_SUPABASE_URL
+const supabaseAnonKey: string | undefined = process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY
 
-const supabaseUrl = Constants.expoConfig?.extra?.supabaseUrl ?? ""
-const supabasePubKey = Constants.expoConfig?.extra?.supabasePubKey ?? ""
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Missing Supabase URL or Anon Key")
+}
 
 const authStorage =
   Platform.OS === 'web'
     ? (typeof window !== 'undefined' ? window.localStorage : undefined)
     : AsyncStorage
 
-export const supabase = createClient(supabaseUrl, supabasePubKey, {
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     storage: authStorage,
     persistSession: true,
