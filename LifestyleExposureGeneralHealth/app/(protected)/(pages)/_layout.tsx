@@ -1,13 +1,45 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
+import { useRouter } from 'expo-router';
+import { supabase } from '../../../lib/supabase';
+
 export default function TabLayout() {
+  const router = useRouter();
   const colorScheme = useColorScheme();
+
+  const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data } = await supabase.auth.getSession();
+      setSession(data.session);
+      setLoading(false);
+    };
+
+    checkUser();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  if (loading) return null;
+
+  if (!session) {
+    router.replace('/login');
+    return null;
+  }
 
   return (
     <Tabs
@@ -17,7 +49,8 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="dashboard"
         options={{
