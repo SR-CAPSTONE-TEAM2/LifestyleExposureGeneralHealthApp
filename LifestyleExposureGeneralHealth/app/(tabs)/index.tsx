@@ -5,15 +5,17 @@ import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 
-import { FoodItem, MealType } from './types';
-import { Vitamins, Minerals } from './types';
-import { SAMPLE_MEALS, RECOMMENDED, RECOMMENDED_VITAMINS, RECOMMENDED_MINERALS } from './constants';
-import { styles } from './styles';
-import { toggleMeal, toggleReportSection } from './utils';
-import { SummarySection } from './components/SummarySection';
-import { MealSections } from './components/MealSections';
-import { NutrientReport } from './components/NutrientReport';
-import { FoodModal } from './components/FoodModal';
+// I had to change these to make it run correctly
+// if it doesn't work, the imports to get rid of ../(pages) and replace with ./
+import { FoodItem, MealType } from '../(pages)/types';
+import { Vitamins, Minerals } from '../(pages)/types';
+import { SAMPLE_MEALS, RECOMMENDED, RECOMMENDED_VITAMINS, RECOMMENDED_MINERALS } from '../(pages)/constants';
+import { styles } from '../(pages)/styles';
+import { toggleMeal, toggleReportSection } from '../(pages)/utils';
+import { SummarySection } from '../(pages)/components/SummarySection';
+import { MealSections } from '../(pages)/components/MealSections';
+import { NutrientReport } from '../(pages)/components/NutrientReport';
+import { FoodModal } from '../(pages)/components/FoodModal';
 
 export default function HomeScreen() {
   const [items] = useState<FoodItem[]>(SAMPLE_MEALS);
