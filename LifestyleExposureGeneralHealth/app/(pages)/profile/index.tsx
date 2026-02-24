@@ -33,7 +33,7 @@ export default function ProfileScreen() {
         }}
       />
       < ParallaxScrollView
-        headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}>
+        headerBackgroundColor={{ light: '#1C1C2E', dark: '#1C1C2E' }}>
         <ThemedText type="title">
           {`Hi, \n${user}!`}
         </ThemedText>
@@ -69,7 +69,7 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   headerImage: {
-    color: '#808080',
+    color: '#8B5CF6',
     bottom: -90,
     left: -35,
     position: 'absolute',
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   numberInput: {
-    backgroundColor: '#2a2f4a',
+    backgroundColor: '#1C1C2E',
     color: 'white',
     borderRadius: 20,
     paddingHorizontal: 20,
