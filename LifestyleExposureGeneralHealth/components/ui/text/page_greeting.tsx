@@ -35,7 +35,6 @@ export function ThemedText({
 
 const styles = StyleSheet.create({
   default: {
-    fontFamily: 'Ubuntu_400Regular',
     fontSize: 16,
     lineHeight: 24,
   },
@@ -45,7 +44,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   title: {
-    fontFamily: 'Ubuntu_700Bold',
     fontSize: 32,
     fontWeight: 'bold',
     lineHeight: 32,

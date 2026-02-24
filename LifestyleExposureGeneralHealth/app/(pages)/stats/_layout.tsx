@@ -12,14 +12,6 @@ export default function StatsLayout() {
           title: 'Stats',
         }}
       />
-      {/* Other sub-screens */}
-      <Stack.Screen
-        name="other-sub-screen"
-        options={{
-          // Memory stuff
-          freezeOnBlur: true,
-        }}
-      />
     </Stack>
   );
 }
