@@ -11,7 +11,39 @@ export default function ProfileLayout() {
           title: 'Profile',
         }}
       />
+      <Stack.Screen
+        name="ask-ai"
+        options={{
+          headerShown: true,
+          freezeOnBlur: true,
+          title: 'Ask AI',
+        }}
+      />
       {/* Other screens */}
+      <Stack.Screen
+        name='settings'
+        options={{
+          headerShown: true,
+          freezeOnBlur: true,
+          title: 'Settings',
+        }}
+      />
+      <Stack.Screen
+        name='linked-apps'
+        options={{
+          headerShown: true,
+          freezeOnBlur: true,
+          title: 'Linked Third-Party Apps',
+        }}
+      />
+      <Stack.Screen
+        name='account-deletion'
+        options={{
+          headerShown: true,
+          freezeOnBlur: true,
+          title: 'Account Deletion',
+        }}
+      />
     </Stack>
   );
 }
