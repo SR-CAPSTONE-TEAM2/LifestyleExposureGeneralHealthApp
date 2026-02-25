@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'expo-router'
+import { UserProfile, Meal, Metric } from '@/types/types';
 import {
   LineChart,
   BarChart,
@@ -15,34 +16,8 @@ import {
   AreaChart,
 } from 'recharts'
 
-interface UserProfile {
-  user_id: string
-  username: string
-  first_name: string
-  last_name: string
-  birthday: string
-  height: number
-  created_at: string
-}
 
-interface Meal {
-  meal_id: string
-  meal_type: string
-  meal_date: string
-  total_calories: number
-  meal_rating: number
-}
-
-interface Metric {
-  metric_id: string
-  observation_date: string
-  weight: number
-  protein: number
-  carbs: number
-  sugar: number
-}
-
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 function groupMealsByMonth(meals: Meal[]) {
   const map: Record<string, number> = {}
@@ -424,7 +399,7 @@ export default function Dashboard() {
               <ResponsiveContainer width="100%" height={280}>
                 <LineChart data={MONTHS.map(month => {
                   const mProteins = metrics.filter(m => MONTHS[new Date(m.observation_date).getMonth()] === month)
-                  const avg = (arr: number[]) => arr.length ? Math.round(arr.reduce((a,b) => a+b,0) / arr.length * 10) / 10 : null
+                  const avg = (arr: number[]) => arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length * 10) / 10 : null
                   return {
                     month,
                     protein: avg(mProteins.map(m => m.protein).filter(Boolean) as number[]),

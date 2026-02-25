@@ -5,15 +5,15 @@ import { router } from 'expo-router'
 const styles = {
   container: { padding: '20px', fontFamily: 'sans-serif' },
   header: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
-  code: { 
-    display: 'block', 
-    backgroundColor: '#f4f4f4', 
-    padding: '10px', 
+  code: {
+    display: 'block',
+    backgroundColor: '#f4f4f4',
+    padding: '10px',
     borderRadius: '5px',
     overflowX: 'auto' as 'auto'
   }
 }
-  
+
 export default function Dashboard() {
   const [profile, setProfile] = useState<any>(null)
   const [session, setSession] = useState<any>(null)
@@ -24,20 +24,16 @@ export default function Dashboard() {
   console.log("Session State:", session);
 
   useEffect(() => {
-
-    
-
-    
     // 1. Initial Session Check
     const checkUser = async () => {
       const { data: { session: initialSession } } = await supabase.auth.getSession()
       setSession(initialSession)
-      
+
       // If we already have a session, fetch the profile
       if (initialSession) {
         await fetchProfile(initialSession.user.id)
       }
-      
+
       setInitializing(false)
     }
 
@@ -46,13 +42,13 @@ export default function Dashboard() {
     // 2. Listen for Auth Changes (Sign-in/Sign-out)
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
       setSession(currentSession)
-      
+
       if (currentSession) {
         await fetchProfile(currentSession.user.id)
       } else {
         setProfile(null)
       }
-      
+
       setInitializing(false)
     })
 
@@ -69,7 +65,7 @@ export default function Dashboard() {
         .from('user_profiles')
         .select('*')
         .eq('user_id', userId)
-        .maybeSingle() 
+        .maybeSingle()
 
       if (error) throw error
       setProfile(data)
@@ -134,6 +130,6 @@ export default function Dashboard() {
     </div>
   )
 }
-  
 
-  
+
+

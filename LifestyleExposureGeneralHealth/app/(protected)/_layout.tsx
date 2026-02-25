@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Redirect, Slot } from 'expo-router'
 import { supabase } from '@/lib/supabase'
+import { UserProvider } from '@/context/user-context'
 
 export default function ProtectedLayout() {
   const [loading, setLoading] = useState(true)
@@ -27,5 +28,9 @@ export default function ProtectedLayout() {
     return <Redirect href="/login" />
   }
 
-  return <Slot />
+  return (
+    <UserProvider>
+      <Slot />
+    </UserProvider>
+  )
 }
